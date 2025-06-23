@@ -1,0 +1,36 @@
+# .gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python/
+env/
+venv/                       # Ignora a pasta do ambiente virtual
+bin/
+include/
+lib/
+lib64/
+*.env                       # Ignora o arquivo .env (muito importante para suas chaves secretas!)
+
+# Editor
+.vscode/                    # Exemplo para VS Code
+.idea/                      # Exemplo para PyCharm
+
+# Django
+*.log
+*.pot
+*.mo
+*.db                       # Ignora o arquivo db.sqlite3 (banco de dados local)
+media/                     # Se você tiver uma pasta para uploads de mídia
+static_root/               # Se você coletar arquivos estáticos aqui
+local_settings.py          # Se você usar um arquivo de configurações locais
+*/migrations/*.pyc
+staticfiles/               # Se você usar uma pasta de staticfiles
+
+# OS generated files
+.DS_Store                   # macOS
+.Trashes                    # macOS
+ehthumbs.db                 # Windows
+Thumbs.db                   # Windows
