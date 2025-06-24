@@ -1,0 +1,91 @@
+{# templates/base.html #}
+{% load static %} {# Certifique-se que esta linha está no topo se estiver usando assets estáticos #}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Ferramentas{% endblock %}</title>
+    {# Carrega o Bootstrap 5 via CDN #}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    {# Font Awesome para ícones #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content-wrapper {
+            flex: 1;
+            padding-top: 70px; /* Ajuste para a altura da navbar fixa */
+        }
+        .footer {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'tasks:task_list' %}"> {# Ajustado para a URL da lista de tarefas #}
+                <i class="fas fa-list-check me-2"></i>Gerenciador de Tarefas
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {# Você pode adicionar mais itens de navegação aqui conforme o projeto cresce #}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'tasks:task_list' %}">
+                            <i class="fas fa-tasks me-1"></i>Minhas Tarefas
+                        </a>
+                    </li>
+                    {# Opcional: Adicionar link para Admin se quiser que apareça sempre na nav bar #}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/">
+                            <i class="fas fa-user-shield me-1"></i>Admin
+                        </a>
+                    </li>
+                </ul>
+                {# Aqui você pode adicionar links de login/logout/registro se for implementar autenticação mais tarde #}
+                <ul class="navbar-nav ms-auto">
+                    {# Por enquanto, vamos manter simples. Você pode adicionar isso depois. #}
+                    {# Exemplo de link de login #}
+                    {#
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                    #}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container content-wrapper">
+        {# Mensagens do Django (serão exibidas aqui) #}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-3" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        {# Conteúdo específico de cada página será inserido aqui #}
+        {% endblock %}
+    </div>
+
+    <footer class="footer mt-auto py-3 bg-dark text-white">
+        <div class="container text-center">
+            <span class="text-muted">© {% now "Y" %} Gerenciador de Tarefas. Todos os direitos reservados.</span>
+        </div>
+    </footer>
+
+    {# Scripts JS do Bootstrap 5 (bundle com Popper) #}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdjKseU+2Vp/pzcf/rX7pGf" crossorigin="anonymous"></script>
+</body>
+</html>
