@@ -1,0 +1,58 @@
+{# tasks/templates/tasks/task_form.html #}
+{% extends 'base.html' %}
+
+{% block title %}Adicionar Nova Tarefa{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Adicionar Nova Tarefa</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %} {# MUITO IMPORTANTE: Token de segurança do Django #}
+
+                        {# Exibe os erros do formulário, se houver #}
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                Por favor, corrija os erros abaixo:
+                                <ul>
+                                    {% for field, errors in form.errors.items %}
+                                        {% for error in errors %}
+                                            <li>{{ field|capfirst }}: {{ error }}</li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        {# Renderiza os campos do formulário individualmente para maior controle do layout #}
+                        {% for field in form %}
+                            <div class="mb-3">
+                                {{ field.label_tag }} {# Rótulo do campo #}
+                                {{ field }} {# O campo do formulário (input, textarea etc.) #}
+                                {% if field.help_text %}
+                                    <div class="form-text text-muted">{{ field.help_text }}</div>
+                                {% endif %}
+                                {% for error in field.errors %} {# Erros específicos do campo #}
+                                    <div class="alert alert-danger mt-1">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+
+                        <button type="submit" class="btn btn-success me-2">
+                            <i class="fas fa-save me-1"></i>Salvar Tarefa
+                        </button>
+                        <a href="{% url 'tasks:task_list' %}" class="btn btn-secondary"> 
+                            <i class="fas fa-ban me-1"></i>Cancelar
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
