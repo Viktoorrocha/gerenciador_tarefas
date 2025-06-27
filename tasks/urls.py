@@ -8,4 +8,5 @@ app_name = 'tasks'
 urlpatterns = [
     path('', views.TaskListView.as_view(), name='task_list'),
     path('new/', views.TaskCreateView.as_view(), name='task_create'),
+    path('<int:pk>/edit/', views.TaskUpdateView.as_view(), name='task_edit'),
 ]
